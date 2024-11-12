@@ -89,7 +89,7 @@ def insert_word(s, hash_table):
     hash_table[string_index] = s
 
 
-# TODO: Modify this function. You may delete this comment when you are done.
+# works? also maybe an infinite loop
 def find_word(s, hash_table):
     """
     Searches for a string in the hash table.
@@ -109,10 +109,6 @@ def find_word(s, hash_table):
         string_index = (string_index + step_size(s)) % size
     # not found
     return False
-
-
-    
-
 
 # TODO: Modify this function. You may delete this comment when you are done.
 def is_reducible(s, hash_table, hash_memo):
