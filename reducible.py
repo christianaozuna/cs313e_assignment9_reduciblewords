@@ -55,7 +55,7 @@ def hash_word(s, size):
     return hash_idx
 
 
-# TODO: Modify this function. You may delete this comment when you are done.
+# WORKS
 def step_size(s):
     """
     Calculates step size for double hashing using STEP_SIZE_CONSTANT.
@@ -63,9 +63,10 @@ def step_size(s):
     pre: s is a lowercase string.
     post: Returns the calculated step size as an integer based on the provided string.
     """
+    return (STEP_SIZE_CONSTANT - (hash_word(s, STEP_SIZE_CONSTANT) % STEP_SIZE_CONSTANT))
 
 
-# TODO: Modify this function. You may delete this comment when you are done.
+# works? i think there's an infinite loop maybe
 def insert_word(s, hash_table):
     """
     Inserts a string into the hash table using double hashing for collision resolution.
@@ -75,6 +76,17 @@ def insert_word(s, hash_table):
     post: Inserts s into hash_table at the correct index; resolves any collisions
           by double hashing.
     """
+    size = len(hash_table)
+    string_index = hash_word(s, size)
+    # if there is a collision
+    while hash_table[string_index] is not None:
+        # if already in the hash table
+        if hash_table[string_index] == s:
+            return
+        # if collision
+        string_index = (string_index + step_size(s)) % size
+    # inserting
+    hash_table[string_index] = s
 
 
 # TODO: Modify this function. You may delete this comment when you are done.
@@ -87,6 +99,19 @@ def find_word(s, hash_table):
     pre: s is a string, and hash_table is a list representing the hash table.
     post: Returns True if s is found in hash_table, otherwise returns False.
     """
+    size = len(hash_table)
+    string_index = hash_word(s, size)
+    while hash_table[string_index] is not None:
+        # if string in hash table
+        if hash_table[string_index] == s:
+            return True
+        # if collision, rehash until we find
+        string_index = (string_index + step_size(s)) % size
+    # not found
+    return False
+
+
+    
 
 
 # TODO: Modify this function. You may delete this comment when you are done.
