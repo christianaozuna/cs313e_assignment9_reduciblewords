@@ -121,6 +121,35 @@ def is_reducible(s, hash_table, hash_memo):
     post: Returns True if s is reducible (also updates hash_memo by
           inserting s if reducible), otherwise returns False.
     """
+    valid_one_letter_words = {"a", "i", "o"}
+    
+    # Memoization index based on hash
+    memo_index = hash_word(s, len(hash_memo))
+    
+    # Check if s is already memoized as reducible
+    if hash_memo[memo_index] == s:
+        return True
+
+    # Base case: if s is one of the base one-letter words, it is reducible
+    if s in valid_one_letter_words:
+        hash_memo[memo_index] = s  # Memoize as reducible
+        return True
+
+    # Check if s is a valid word in the dictionary
+    if s not in hash_table:
+        return False  # Return False if not a valid word
+
+    # Recursive case: try removing each letter one at a time
+    for i in range(len(s)):
+        sub_word = s[:i] + s[i+1:]
+        # Recursively check if the sub-word is reducible
+        if is_reducible(sub_word, hash_table, hash_memo):
+            hash_memo[memo_index] = s  # Memoize as reducible
+            return True
+
+    # If no reducible path is found, memoize as non-reducible and return False
+    hash_memo[memo_index] = s  # Memoize as non-reducible
+    return False
 
 # WORKS
 def get_longest_words(string_list):
