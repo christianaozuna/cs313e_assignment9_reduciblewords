@@ -155,7 +155,10 @@ def is_reducible(s, hash_table, hash_memo):
     for i in range(len(s)):
         reduced_word = s[:i] + s[i+1:]
         if is_reducible(reduced_word, hash_table, hash_memo):
+<<<<<<< HEAD
 <<<<<<< Updated upstream
+=======
+>>>>>>> parent of ef711e2 (reducible failing 2)
             # Store the reducible word in hash_memo
             hash_memo[index] = s
 =======
