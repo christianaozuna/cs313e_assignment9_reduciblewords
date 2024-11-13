@@ -110,7 +110,7 @@ def find_word(s, hash_table):
     # not found
     return False
 
-# TODO: Modify this function. You may delete this comment when you are done.
+# FAILING TWO
 def is_reducible(s, hash_table, hash_memo):
     """
     Determines if a string is reducible using a recursive check.
@@ -121,10 +121,11 @@ def is_reducible(s, hash_table, hash_memo):
     post: Returns True if s is reducible (also updates hash_memo by
           inserting s if reducible), otherwise returns False.
     """
+    # base case
     if s in ["a", "i", "o"]:
         return True
     
-    # Check if the word is already in the hash_memo
+    # checking if in cache
     index = hash_word(s, len(hash_memo))
     if hash_memo[index] == s:
         return True
@@ -133,14 +134,14 @@ def is_reducible(s, hash_table, hash_memo):
     if s not in hash_table:
         return False
 
-    # Try removing each letter to form a smaller word
     for i in range(len(s)):
         reduced_word = s[:i] + s[i+1:]
+        # recursive call
         if is_reducible(reduced_word, hash_table, hash_memo):
-            # Store the reducible word in hash_memo
+            # adding reduced word to memoization table
             hash_memo[index] = s
             return True
-    
+
     return False
 
 # WORKS
