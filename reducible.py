@@ -134,10 +134,17 @@ def is_reducible(s, hash_table, hash_memo):
     """
     if s in ["a", "i", "o"]:
         return True
+<<<<<<< Updated upstream
     
     # Check if the word is already in the hash_memo
     index = hash_word(s, len(hash_memo))
     if hash_memo[index] == s:
+=======
+   
+    # checking if in cache
+    memo_index = hash_word(s, len(hash_memo))
+    if hash_memo[memo_index] == s:
+>>>>>>> Stashed changes
         return True
 
     # Check if the word is in the original hash_table
@@ -148,8 +155,13 @@ def is_reducible(s, hash_table, hash_memo):
     for i in range(len(s)):
         reduced_word = s[:i] + s[i+1:]
         if is_reducible(reduced_word, hash_table, hash_memo):
+<<<<<<< Updated upstream
             # Store the reducible word in hash_memo
             hash_memo[index] = s
+=======
+            # adding reduced word to memoization table
+            hash_memo[memo_index] = s
+>>>>>>> Stashed changes
             return True
     
     return False
@@ -189,6 +201,7 @@ def main():
     # where each line read from input()
     # should be a single word. Append to word_list
     # ensure each word has no trailing white space.
+<<<<<<< Updated upstream
         word = line.strip()
         if word:
             word_list.append(word)
@@ -200,15 +213,46 @@ def main():
     # create an empty hash_list  
     # populate the hash_list with N blank strings
     hash_list = [None] * prime_n
+=======
+    word_list = []
+    try:
+        while True:
+            word = input().strip()
+            if word:
+                word_list.append(word)
+    except EOFError:
+        pass
+
+    # find length of word_list
+    length_word_list = len(word_list)
+
+    # determine prime number N that is greater than twice
+    # the length of the word_list
+    N_minimum = length_word_list * 2
+    N = N_minimum + 1
+    while not is_prime(N):
+        N += 2
+
+    # create an empty hash_list
+
+    # populate the hash_list with N blank strings
+    hash_list = [""] * N
+
+>>>>>>> Stashed changes
     # hash each word in word_list into hash_list
     # for collisions use double hashing
     for word in word_list:
         insert_word(word, hash_list)
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     # create an empty hash_memo of size M
     # we do not know a priori how many words will be reducible
     # let us assume it is 10 percent (fairly safe) of the words
     # then M is a prime number that is slightly greater than
     # 0.2 * size of word_list
+<<<<<<< Updated upstream
     size_m = is_prime(0.2 * length)
     hash_memo = [None] * size_m
     # populate the hash_memo with M blank strings
@@ -216,6 +260,19 @@ def main():
         hash_memo[i] = None
     # create an empty list reducible_words
     reducible_words = []
+=======
+    memo_minimum = .2 * len(word_list)
+    M = memo_minimum + 1
+    while not is_prime(M):
+        M += 2
+
+    # populate the hash_memo with M blank strings
+    hash_memo = [""] * M
+
+    # create an empty list reducible_words
+    reducible_words = []
+
+>>>>>>> Stashed changes
     # for each word in the word_list recursively determine
     # if it is reducible, if it is, add it to reducible_words
     # as you recursively remove one letter at a time check
@@ -225,6 +282,7 @@ def main():
     for word in word_list:
         if is_reducible(word, hash_list, hash_memo):
             reducible_words.append(word)
+<<<<<<< Updated upstream
             if word not in ["a", "i", "o"]:
                 insert_word(word, hash_memo)
     # find the largest reducible words in reducible_words
@@ -233,6 +291,16 @@ def main():
     # one word per line
     longest_words.sort()
     for word in longest_words:
+=======
+
+    # find the largest reducible words in reducible_words
+    longest_words = get_longest_words(reducible_words)
+
+    # print the reducible words in alphabetical order
+    # one word per line
+    sorted_longest_words = sorted(longest_words)
+    for word in sorted_longest_words:
+>>>>>>> Stashed changes
         print(word)
 
 if __name__ == "__main__":
